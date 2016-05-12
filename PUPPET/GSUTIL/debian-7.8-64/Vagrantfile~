@@ -13,5 +13,6 @@ config.vm.provider "virtualbox" do |v|
     v.customize ["modifyvm", :id, "--natdnsproxy1", "on"]
 end
 
-  config.vm.provision "shell", inline: "puppet module install GobuNatarajan-gsutil"
+config.vm.provision "shell", inline: $script
+
 end

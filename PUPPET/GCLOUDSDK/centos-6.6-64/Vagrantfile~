@@ -5,18 +5,20 @@
 VAGRANTFILE_API_VERSION = "2"
 
 $script = <<SCRIPT
-puppet module install GobuNatarajan-gsutil
-puppet apply --modulepath=/etc/puppetlabs/code/environments/production/modules -e "include gsutil"
+puppet module install RanjithKumar45-gcloudsdk
+puppet apply --modulepath=/etc/puppetlabs/code/environments/production/modules -e "include gcloudsdk"
 SCRIPT
 
 Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
-  config.vm.box = "puppetlabs/ubuntu-14.04-64-puppet"
+  config.vm.box = "puppetlabs/centos-6.6-64-puppet"
 
 config.vm.provider "virtualbox" do |v|
     v.customize ["modifyvm", :id, "--natdnshostresolver1", "on"]
     v.customize ["modifyvm", :id, "--natdnsproxy1", "on"]
 end
 
+
+config.vm.provision "shell", inline: $script
 config.vm.provision "shell", inline: "puppet module install GobuNatarajan-gsutil"
 
 end
